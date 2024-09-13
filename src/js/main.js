@@ -35,3 +35,64 @@ menuWrapper.addEventListener('click', (e) => {
         }
     }
 });
+
+// TIMER
+const endtime = '2024-10-01';
+
+const getTimerRemaining = (endtime) => {
+    let days, hours, minutes, seconds;
+          
+    const time = new Date(endtime) - new Date();
+
+    if (time > 0) {
+        days = Math.floor(time / (1000 * 60 * 60) / 24);
+        hours = Math.floor((time / (1000 * 60 * 60)) % 24);
+        minutes = Math.floor((time / (1000 * 60)) % 60);
+        seconds = Math.floor((time / 1000) % 60);
+    } else {
+        days = 0;
+        hours = 0;
+        minutes = 0;
+        seconds = 0;
+    }
+
+    return {
+        't': time,
+        'days': days,
+        'hours': hours,
+        'minutes': minutes,
+        'seconds': seconds
+    };
+};
+
+const getZero = (num) => {
+    if (num >= 10) {
+        return num;
+    } else {
+        return `0${num}`;
+    }
+};
+
+const setTime = (wrapperSelector, endtime) => {
+    const wrapper = document.querySelector(wrapperSelector),
+          days = wrapper.querySelector('#days'),
+          hours = wrapper.querySelector('#hours'),
+          minutes = wrapper.querySelector('#minutes'),
+          seconds = wrapper.querySelector('#seconds');
+    let timerId = setInterval(updateClock, 1000);
+
+    function updateClock() {
+        const t = getTimerRemaining(endtime);
+
+        days.textContent = getZero(t.days);
+        hours.textContent = getZero(t.hours);
+        minutes.textContent = getZero(t.minutes);
+        seconds.textContent = getZero(t.seconds);
+
+        if (t.t <= 0) clearInterval(timerId);
+    }
+
+    updateClock();
+};
+
+setTime('.timer', endtime);
