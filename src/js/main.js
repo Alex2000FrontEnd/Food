@@ -100,11 +100,15 @@ setTime('.timer', endtime);
 // MODAL
 const modal = document.querySelector('[data-modal="request"]'),
       triggersModal = document.querySelectorAll('[data-trigger="request"]');
+let timerModal;
 
 const showModal = () => {
     modal.classList.remove('hide');
     modal.classList.add('show');
     document.body.style.overflow = 'hidden';
+
+    if (timerModal) clearInterval(timerModal);
+    window.removeEventListener('scroll', calcScrollModal);
 };
 
 const hideModal = () => {
@@ -132,3 +136,15 @@ document.addEventListener('keydown', (e) => {
         hideModal();
     } 
 });
+
+// timerModal = setTimeout(showModal, 10000);
+
+window.addEventListener('scroll', calcScrollModal);
+
+function calcScrollModal() {
+    const doc = document.documentElement;
+
+    if (doc.scrollHeight <= doc.scrollTop + doc.clientHeight + 5) {
+        showModal();
+    }
+}
