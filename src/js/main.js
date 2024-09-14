@@ -96,3 +96,39 @@ const setTime = (wrapperSelector, endtime) => {
 };
 
 setTime('.timer', endtime);
+
+// MODAL
+const modal = document.querySelector('[data-modal="request"]'),
+      triggersModal = document.querySelectorAll('[data-trigger="request"]');
+
+const showModal = () => {
+    modal.classList.remove('hide');
+    modal.classList.add('show');
+    document.body.style.overflow = 'hidden';
+};
+
+const hideModal = () => {
+    modal.classList.remove('show');
+    modal.classList.add('hide');
+    document.body.style.overflow = '';
+};
+
+triggersModal.forEach(trigger => {
+    trigger.addEventListener('click', () => {
+        showModal();
+    });
+});
+
+modal.addEventListener('click', (e) => {
+    const t = e.target;
+
+    if (t && t.hasAttribute('data-close') || t == modal) {
+        hideModal();
+    }
+});
+
+document.addEventListener('keydown', (e) => {
+    if (e.code == 'Escape' && modal.classList.contains('show')) {
+        hideModal();
+    } 
+});
