@@ -148,3 +148,69 @@ function calcScrollModal() {
         showModal();
     }
 }
+
+// CARDS
+class MenuCard {
+    constructor({parentSelector, elClasses, imgSrc, imgAlt, title, descr, price}) {
+        this.parent = document.querySelector(parentSelector);
+        this.elClasses = elClasses;
+        this.imgSrc = imgSrc;
+        this.imgAlt = imgAlt;
+        this.title = title;
+        this.descr = descr;
+        this.price = price;
+        this.usd = 41.37;
+        this.calcCurr();
+    }
+    calcCurr() {
+        if (typeof this.price == 'number') {
+            this.price = (this.price * this.usd).toFixed();
+        } else {
+            this.price = '---';
+        }
+    }
+    render() {
+        this.parent.innerHTML += `
+            <div class=${this.elClasses}>
+                <img src=${this.imgSrc} alt=${this.imgAlt}>
+                <h3 class="menu__item-subtitle">${this.title}</h3>
+                <div class="menu__item-descr">${this.descr}</div>
+                <div class="menu__item-divider"></div>
+                <div class="menu__item-price">
+                    <div class="menu__item-cost">Цена:</div>
+                    <div class="menu__item-total"><span>${this.price}</span> грн/день</div>
+                </div>
+            </div>
+        `;
+    }
+}
+
+new MenuCard({
+    parentSelector: '.menu__field .container',
+    elClasses: 'menu__item',
+    imgSrc: 'img/tabs/vegy.jpg',
+    imgAlt: 'vegy',
+    title: 'Меню "Фитнес"',
+    descr: 'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!',
+    price: 7
+}).render();
+
+new MenuCard({
+    parentSelector: '.menu__field .container',
+    elClasses: 'menu__item',
+    imgSrc: 'img/tabs/elite.jpg',
+    imgAlt: 'elite',
+    title: 'Меню “Премиум”',
+    descr: 'В меню “Премиум” мы используем не только красивый дизайн упаковки, но и качественное исполнение блюд. Красная рыба, морепродукты, фрукты - ресторанное меню без похода в ресторан!',
+    price: 10
+}).render();
+
+new MenuCard({
+    parentSelector: '.menu__field .container',
+    elClasses: 'menu__item',
+    imgSrc: 'img/tabs/post.jpg',
+    imgAlt: 'post',
+    title: 'Меню "Постное"',
+    descr: 'Меню “Постное” - это тщательный подбор ингредиентов: полное отсутствие продуктов животного происхождения, молоко из миндаля, овса, кокоса или гречки, правильное количество белков за счет тофу и импортных вегетарианских стейков. ',
+    price: 2
+}).render();
